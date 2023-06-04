@@ -18,7 +18,7 @@ int main()
 {
 	GameState gameState = GameState::GAME_INIT;
 	manager = new GameManager();
-
+	
 	while (gameState != GameState::EXIT)
 	{
 		switch (gameState)

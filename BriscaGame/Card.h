@@ -10,13 +10,14 @@ enum class CardSuit
 class Card
 {
 public:
-	Card(char value, CardSuit cardSuit, int valueInt, int points);
+	Card(char value, CardSuit cardSuit, int valueInt, int points, char cardSuitChar);
 	~Card();
 
 	char GetValue() const;
 	int GetValueInt() const;
 	int GetPoints() const;
 	CardSuit GetCardSuit() const;
+	char GetCardSuitChar() const;
 
 private:
 
@@ -24,6 +25,7 @@ private:
 	int valueInt;
 	int points;
 	CardSuit cardSuit;
+	char cardSuitChar;
 };
 
 inline char Card::GetValue() const
@@ -44,5 +46,10 @@ inline int Card::GetPoints() const
 inline CardSuit Card::GetCardSuit() const
 {
 	return cardSuit;
+}
+
+inline char Card::GetCardSuitChar() const
+{
+	return cardSuitChar;
 }
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <list>
+#include <vector>
 #include "Card.h"
 
 enum class PlayerType
@@ -22,12 +22,13 @@ public:
 	bool IsCardHandEmpty() const;
 
 	void Play();
+	void ChangeUnveiledCard();
 	void TakeCard(Card* card);
 
 private:
 
 	PlayerType playerType;
-	std::list<Card*> cardHand;
+	std::vector<Card*> cardHand;
 
 	Card* selectedCard;
 	int points;

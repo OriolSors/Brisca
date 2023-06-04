@@ -1,5 +1,5 @@
 #include "GameManager.h"
-
+#include "IOUser.h"
 #include <algorithm>
 #include <random>
 
@@ -14,16 +14,7 @@ GameManager::GameManager()
 
 GameManager::~GameManager()
 {
-	for (const Card* card: cardDeck)
-	{
-		delete card;
-	}
-
-	cardDeck.clear();
-
-	delete playerUser;
-	delete playerAI;
-	delete unveiledCard;
+	CleanUp();
 }
 
 bool GameManager::Init()
@@ -80,6 +71,18 @@ bool GameManager::GameRoundFinish()
 	}
 	else
 	{
+		if (startPlayer == PlayerType::USER)
+		{
+			playerUser->TakeCard(TakeCardFromSet());
+			playerAI->TakeCard(TakeCardFromSet());
+		}
+		else
+		{
+			playerAI->TakeCard(TakeCardFromSet());
+			playerUser->TakeCard(TakeCardFromSet());
+		}
+
+		playerUser->ChangeUnveiledCard();
 		return true;
 	}
 	
@@ -87,19 +90,31 @@ bool GameManager::GameRoundFinish()
 
 bool GameManager::GameFinish()
 {
-	return false;
+	Log("Repeat game?");
+	bool isRepeatGame = InputBool();
+	return isRepeatGame;
 }
 
 bool GameManager::CleanUp()
 {
-	return false;
+	for (const Card* card : cardDeck)
+	{
+		delete card;
+	}
+
+	cardDeck.clear();
+
+	delete playerUser;
+	delete playerAI;
+	delete unveiledCard;
+	return true;
 }
 
 //--- PRIVATE METHODS ---
 
 void GameManager::FillCardList()
 {
-	for (int value = 2; value < 15; value++)
+	for (int value = 0; value < 13; value++)
 	{
 		CreateNewCard(value, CardSuit::CLOVERS);
 		CreateNewCard(value, CardSuit::HEARTS);
@@ -119,25 +134,45 @@ void GameManager::CreateNewCard(int value, CardSuit cardSuit)
 	int points = 0;
 	switch (value)
 	{
-	case 3:
-		points = 10;
-		break;
-	case 11:
+	case 8:
 		points = 2;
 		break;
-	case 12:
+	case 9:
 		points = 3;
 		break;
-	case 13:
+	case 10:
 		points = 4;
 		break;
-	case 14:
+	case 11:
+		points = 10;
+		break;
+	case 12:
 		points = 11;
 		break;
 	default:
 		break;
 	}
-	Card* card = new Card(cardValue, cardSuit, value, points);
+
+
+	char cardSuitChar;
+	if (cardSuit == CardSuit::CLOVERS)
+	{
+		cardSuitChar = '\u2663';
+	}
+	else if (cardSuit == CardSuit::HEARTS)
+	{
+		cardSuitChar = '\u2665';
+	}
+	else if (cardSuit == CardSuit::PIKES)
+	{
+		cardSuitChar = '\u2660';
+	}
+	else
+	{
+		cardSuitChar = '\u2666';
+	}
+
+	Card* card = new Card(cardValue, cardSuit, value, points, cardSuitChar);
 	cardDeck.push_back(card);
 }
 
@@ -146,43 +181,43 @@ char GameManager::CastCardValue(int value)
 	char cardValue = '0';
 	switch (value)
 	{
-	case 2:
+	case 0:
 		cardValue = '2';
 		break;
-	case 3:
-		cardValue = '3';
-		break;
-	case 4:
+	case 1:
 		cardValue = '4';
 		break;
-	case 5:
+	case 2:
 		cardValue = '5';
 		break;
-	case 6:
+	case 3:
 		cardValue = '6';
 		break;
-	case 7:
+	case 4:
 		cardValue = '7';
 		break;
-	case 8:
+	case 5:
 		cardValue = '8';
 		break;
-	case 9:
+	case 6:
 		cardValue = '9';
 		break;
-	case 10:
+	case 7:
 		cardValue = '10';
 		break;
-	case 11:
+	case 8:
 		cardValue = 'J';
 		break;
-	case 12:
+	case 9:
 		cardValue = 'Q';
 		break;
-	case 13:
+	case 10:
 		cardValue = 'K';
 		break;
-	case 14:
+	case 11:
+		cardValue = '3';
+		break;
+	case 12:
 		cardValue = 'A';
 		break;
 	default:
