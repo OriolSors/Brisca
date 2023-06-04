@@ -40,8 +40,7 @@ int main()
 			gameState = GameState::GAME_ROUND_FINISH;
 			break;
 		case GameState::GAME_ROUND_FINISH:
-			bool isGameFinished = manager->GameRoundFinish();
-			if (isGameFinished)
+			if (manager->GameRoundFinish())
 			{
 				gameState = GameState::GAME_FINISH;
 			}
@@ -51,8 +50,7 @@ int main()
 			}
 			break;
 		case GameState::GAME_FINISH:
-			bool isGameReplayed = manager->GameFinish();
-			if (isGameReplayed)
+			if (manager->GameFinish())
 			{
 				manager->CleanUp();
 				gameState = GameState::GAME_INIT;
