@@ -23,10 +23,12 @@ void RoundManager::ObtainPointsFromRound()
 		if (pointsObtained > 0)
 		{
 			playerUser->SetPoints(pointsObtained);
+			manager->SetStartPlayer(playerUser->GetPlayerType());
 		}
 		else
 		{
 			playerAI->SetPoints(std::abs(pointsObtained));
+			manager->SetStartPlayer(playerAI->GetPlayerType());
 		}
 	}
 	else
@@ -35,10 +37,12 @@ void RoundManager::ObtainPointsFromRound()
 		if (pointsObtained > 0)
 		{
 			playerAI->SetPoints(pointsObtained);
+			manager->SetStartPlayer(playerAI->GetPlayerType());
 		}
 		else
 		{
 			playerUser->SetPoints(std::abs(pointsObtained));
+			manager->SetStartPlayer(playerUser->GetPlayerType());
 		}
 	}
 }

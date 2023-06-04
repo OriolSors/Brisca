@@ -19,6 +19,8 @@ public:
 	Card* GetSelectedCard() const;
 	void SetPoints(int points);
 
+	bool IsCardHandEmpty() const;
+
 	void Play();
 	void TakeCard(Card* card);
 
@@ -44,5 +46,10 @@ inline Card* Player::GetSelectedCard() const
 inline void Player::SetPoints(int points)
 {
 	this->points += points;
+}
+
+inline bool Player::IsCardHandEmpty() const
+{
+	return cardHand.empty();
 }
 

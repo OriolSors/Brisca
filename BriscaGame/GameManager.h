@@ -24,7 +24,9 @@ public:
 	Player* GetPlayerUser() const;
 	Player* GetPlayerAI() const;
 	Card* GetUnveiledCard() const;
+	void SetUnveiledCard(Card* card);
 	PlayerType GetStartPlayer() const;
+	void SetStartPlayer(PlayerType playerType);
 
 private:
 
@@ -62,7 +64,17 @@ inline Card* GameManager::GetUnveiledCard() const
 	return unveiledCard;
 }
 
+inline void GameManager::SetUnveiledCard(Card* card)
+{
+	unveiledCard = card;
+}
+
 inline PlayerType GameManager::GetStartPlayer() const
 {
 	return startPlayer;
+}
+
+inline void GameManager::SetStartPlayer(PlayerType playerType)
+{
+	startPlayer = playerType;
 }

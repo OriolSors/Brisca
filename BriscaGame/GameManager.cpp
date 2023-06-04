@@ -5,9 +5,10 @@
 
 GameManager::GameManager()
 {
-	playerUser = new Player();
-	playerAI = new Player();
+	playerUser = new Player(PlayerType::USER);
+	playerAI = new Player(PlayerType::AI);
 	unveiledCard = nullptr;
+	startPlayer = PlayerType::USER;
 	roundManager = new RoundManager();
 }
 
@@ -37,23 +38,51 @@ bool GameManager::Init()
 
 bool GameManager::PlayerSelection()
 {
-
+	playerUser->Play();
 	return true;
 }
 
 bool GameManager::AISelection()
 {
+	playerAI->Play();
 	return true;
 }
 
 bool GameManager::GameRound()
 {
+	roundManager->ObtainPointsFromRound();
 	return true;
 }
 
 bool GameManager::GameRoundFinish()
 {
-	return false;
+	if (playerUser->IsCardHandEmpty() && playerAI->IsCardHandEmpty()) 
+	{
+		return false;
+	}
+	else if (cardDeck.empty()) 
+	{
+		return true;
+	}
+	else if (cardDeck.size() == 1)
+	{
+		if (startPlayer == PlayerType::USER)
+		{
+			playerUser->TakeCard(TakeCardFromSet());
+			playerAI->TakeCard(unveiledCard);
+		}
+		else
+		{
+			playerAI->TakeCard(TakeCardFromSet());
+			playerUser->TakeCard(unveiledCard);
+		}
+		return true;
+	}
+	else
+	{
+		return true;
+	}
+	
 }
 
 bool GameManager::GameFinish()
