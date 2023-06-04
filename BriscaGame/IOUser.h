@@ -7,6 +7,11 @@ void Log(const char* message)
 	std::cout << message << std::endl;
 }
 
+void LogSameLine(const char* message)
+{
+	std::cout << message << std::endl;
+}
+
 int InputNumber(int options)
 {
 	int input;

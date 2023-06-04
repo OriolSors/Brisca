@@ -17,6 +17,7 @@ public:
 
 	PlayerType GetPlayerType() const;
 	Card* GetSelectedCard() const;
+	int GetPoints();
 	void SetPoints(int points);
 
 	bool IsCardHandEmpty() const;
@@ -42,6 +43,11 @@ inline PlayerType Player::GetPlayerType() const
 inline Card* Player::GetSelectedCard() const
 {
 	return selectedCard;
+}
+
+inline int Player::GetPoints()
+{
+	return points;
 }
 
 inline void Player::SetPoints(int points)

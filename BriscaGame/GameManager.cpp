@@ -90,6 +90,20 @@ bool GameManager::GameRoundFinish()
 
 bool GameManager::GameFinish()
 {
+	int playerUserPoints = playerUser->GetPoints();
+	int playerAIPoints = playerAI->GetPoints();
+
+	if (playerUserPoints > playerAIPoints)
+	{
+		LogSameLine("You win with: ");
+		Log((char*)playerUserPoints);
+	}
+	else
+	{
+		LogSameLine("Enemy win with: ");
+		Log((char*)playerAIPoints);
+	}
+
 	Log("Repeat game?");
 	bool isRepeatGame = InputBool();
 	return isRepeatGame;

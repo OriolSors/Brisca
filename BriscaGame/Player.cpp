@@ -38,6 +38,12 @@ void Player::Play()
 		int option = InputNumber(count);
 		selectedCard = cardHand[option - 1];
 		cardHand.erase(cardHand.begin() + option - 1);
+
+		Log("You selected:");
+		char selection[2];
+		selection[0] = selectedCard->GetValue();
+		selection[1] = selectedCard->GetCardSuitChar();
+		Log(selection);
 	}
 	else
 	{
@@ -48,6 +54,12 @@ void Player::Play()
 
 		selectedCard = cardHand[option];
 		cardHand.erase(cardHand.begin() + option);
+
+		Log("Enemy selected:");
+		char selection[2];
+		selection[0] = selectedCard->GetValue();
+		selection[1] = selectedCard->GetCardSuitChar();
+		Log(selection);
 	}
 	
 }

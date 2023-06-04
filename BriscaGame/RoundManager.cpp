@@ -1,6 +1,7 @@
 #include "RoundManager.h"
 #include "GameManager.h"
 #include <cassert>
+#include "IOUser.h"
 
 RoundManager::RoundManager()
 {
@@ -24,11 +25,16 @@ void RoundManager::ObtainPointsFromRound()
 		{
 			playerUser->SetPoints(pointsObtained);
 			manager->SetStartPlayer(playerUser->GetPlayerType());
+			Log("You win!");
+			LogSameLine("You receive: ");
+			LogSameLine((char*) pointsObtained);
 		}
 		else
 		{
 			playerAI->SetPoints(std::abs(pointsObtained));
 			manager->SetStartPlayer(playerAI->GetPlayerType());
+			Log("You lose :(");
+			
 		}
 	}
 	else
@@ -38,11 +44,15 @@ void RoundManager::ObtainPointsFromRound()
 		{
 			playerAI->SetPoints(pointsObtained);
 			manager->SetStartPlayer(playerAI->GetPlayerType());
+			Log("You win!");
+			LogSameLine("You receive: ");
+			LogSameLine((char*)pointsObtained);
 		}
 		else
 		{
 			playerUser->SetPoints(std::abs(pointsObtained));
 			manager->SetStartPlayer(playerUser->GetPlayerType());
+			Log("You lose :(");
 		}
 	}
 }
