@@ -1,8 +1,21 @@
 #pragma once
+
+enum class CardSuit
+{
+	HEARTS,
+	PIKES,
+	TILES,
+	CLOVERS
+};
 class Card
 {
 public:
-	Card();
+	Card(char value, CardSuit cardSuit);
 	~Card();
+
+private:
+
+	char value;
+	CardSuit cardSuit;
 };
 

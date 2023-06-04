@@ -1,6 +1,7 @@
 #include "Card.h"
+#include <cassert>
 
-Card::Card()
+Card::Card(char value, CardSuit cardSuit): value(value),cardSuit(cardSuit)
 {
 }
 

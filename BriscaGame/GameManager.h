@@ -1,5 +1,8 @@
 #pragma once
 
+#include <unordered_set>
+#include "Card.h"
+
 class GameManager 
 {
 public:
@@ -17,6 +20,8 @@ public:
 
 private:
 
-
+	void FillCardList();
+	char CastCardValue(int value);
+	std::unordered_set<Card*> cardList;
 
 };
