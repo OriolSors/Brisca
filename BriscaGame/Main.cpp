@@ -1,18 +1,20 @@
 #include <iostream>
 
-enum State
+enum class GameState
 {
-	INIT,
+	GAME_INIT,
 	PLAYER_SELECTION,
 	AI_SELECTION,
-	GAME,
-	ROUND_FINISH
-
+	GAME_ROUND,
+	GAME_ROUND_FINISH,
+	GAME_FINISH
 };
 
 int main()
 {
-	while (1)
+	GameState gameState = GameState::GAME_INIT;
+
+	while (gameState != GameState::GAME_FINISH)
 	{
 
 	}
