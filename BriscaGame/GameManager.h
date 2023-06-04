@@ -3,6 +3,7 @@
 #include <deque>
 #include "Card.h"
 #include "Player.h"
+#include "RoundManager.h"
 
 class GameManager 
 {
@@ -31,5 +32,8 @@ private:
 
 	Player* playerUser;
 	Player* playerAI;
+	PlayerType startPlayer;
+
+	RoundManager* roundManager;
 
 };

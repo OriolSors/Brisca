@@ -8,6 +8,7 @@ GameManager::GameManager()
 	playerUser = new Player();
 	playerAI = new Player();
 	unveiledCard = nullptr;
+	roundManager = new RoundManager();
 }
 
 GameManager::~GameManager()
@@ -29,7 +30,6 @@ bool GameManager::Init()
 	FillCardList();
 	SplitCardsToPlayers();
 
-	
 	unveiledCard = TakeCardFromSet();
 
 	return true;
@@ -37,17 +37,18 @@ bool GameManager::Init()
 
 bool GameManager::PlayerSelection()
 {
-	return false;
+
+	return true;
 }
 
 bool GameManager::AISelection()
 {
-	return false;
+	return true;
 }
 
 bool GameManager::GameRound()
 {
-	return false;
+	return true;
 }
 
 bool GameManager::GameRoundFinish()
@@ -141,12 +142,32 @@ char GameManager::CastCardValue(int value)
 
 void GameManager::SplitCardsToPlayers()
 {
-	playerUser->TakeCard(TakeCardFromSet());
-	playerAI->TakeCard(TakeCardFromSet());
-	playerUser->TakeCard(TakeCardFromSet());
-	playerAI->TakeCard(TakeCardFromSet());
-	playerUser->TakeCard(TakeCardFromSet());
-	playerAI->TakeCard(TakeCardFromSet());
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dis(1, 2);
+	int randomNum = dis(gen);
+
+	startPlayer = static_cast<PlayerType>(randomNum);
+
+	if (startPlayer == PlayerType::USER)
+	{
+		playerUser->TakeCard(TakeCardFromSet());
+		playerAI->TakeCard(TakeCardFromSet());
+		playerUser->TakeCard(TakeCardFromSet());
+		playerAI->TakeCard(TakeCardFromSet());
+		playerUser->TakeCard(TakeCardFromSet());
+		playerAI->TakeCard(TakeCardFromSet());
+
+	}
+	else
+	{
+		playerAI->TakeCard(TakeCardFromSet());
+		playerUser->TakeCard(TakeCardFromSet());
+		playerAI->TakeCard(TakeCardFromSet());
+		playerUser->TakeCard(TakeCardFromSet());
+		playerAI->TakeCard(TakeCardFromSet());
+		playerUser->TakeCard(TakeCardFromSet());
+	}
 }
 
 Card* GameManager::TakeCardFromSet()

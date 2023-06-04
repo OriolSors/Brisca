@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player()
+Player::Player(PlayerType playerType): playerType(playerType), points(0), selectedCard(nullptr)
 {
 }
 
@@ -16,6 +16,7 @@ Player::~Player()
 
 void Player::Play()
 {
+	//TODO: Set the selected card
 }
 
 void Player::TakeCard(Card* card)
