@@ -20,9 +20,16 @@ public:
 	bool GameFinish();
 	bool CleanUp();
 
+
+	Player* GetPlayerUser() const;
+	Player* GetPlayerAI() const;
+	Card* GetUnveiledCard() const;
+	PlayerType GetStartPlayer() const;
+
 private:
 
 	void FillCardList();
+	void CreateNewCard(int value, CardSuit cardSuit);
 	char CastCardValue(int value);
 	void SplitCardsToPlayers();
 	Card* TakeCardFromSet();
@@ -37,3 +44,25 @@ private:
 	RoundManager* roundManager;
 
 };
+
+extern GameManager* manager;
+
+inline Player* GameManager::GetPlayerUser() const
+{
+	return playerUser;
+}
+
+inline Player* GameManager::GetPlayerAI() const
+{
+	return playerAI;
+}
+
+inline Card* GameManager::GetUnveiledCard() const
+{
+	return unveiledCard;
+}
+
+inline PlayerType GameManager::GetStartPlayer() const
+{
+	return startPlayer;
+}

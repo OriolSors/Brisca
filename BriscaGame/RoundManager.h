@@ -1,6 +1,6 @@
 #pragma once
 #include "Card.h"
-#include "GameManager.h"
+#include "Player.h"
 class RoundManager
 {
 public:
@@ -8,15 +8,11 @@ public:
 	RoundManager();
 	~RoundManager();
 
-	void SetStartPlayer(PlayerType startPlayer);
-	void ObtainPointsFromRound(Player& playerUser, Player& playerAI);
+	void ObtainPointsFromRound();
 
 private:
-	PlayerType startPlayer;
+
+	int ObtainPointsFromCards(Card* firstCard, Card* secondCard);
 };
 
-inline void RoundManager::SetStartPlayer(PlayerType startPlayer)
-{
-	this->startPlayer = startPlayer;
-}
 

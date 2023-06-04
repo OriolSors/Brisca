@@ -16,6 +16,7 @@ public:
 	~Player();
 
 	PlayerType GetPlayerType() const;
+	Card* GetSelectedCard() const;
 	void SetPoints(int points);
 
 	void Play();
@@ -33,6 +34,11 @@ private:
 inline PlayerType Player::GetPlayerType() const
 {
 	return playerType;
+}
+
+inline Card* Player::GetSelectedCard() const
+{
+	return selectedCard;
 }
 
 inline void Player::SetPoints(int points)

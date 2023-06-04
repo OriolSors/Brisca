@@ -70,32 +70,12 @@ bool GameManager::CleanUp()
 
 void GameManager::FillCardList()
 {
-	for (int value = 0; value < 13; value++)
+	for (int value = 2; value < 15; value++)
 	{
-		char cardValue = CastCardValue(value);
-		Card* card = new Card(cardValue, CardSuit::CLOVERS);
-		cardDeck.push_back(card);
-	}
-
-	for (int value = 0; value < 13; value++)
-	{
-		char cardValue = CastCardValue(value);
-		Card* card = new Card(cardValue, CardSuit::HEARTS);
-		cardDeck.push_back(card);
-	}
-
-	for (int value = 0; value < 13; value++)
-	{
-		char cardValue = CastCardValue(value);
-		Card* card = new Card(cardValue, CardSuit::PIKES);
-		cardDeck.push_back(card);
-	}
-
-	for (int value = 0; value < 13; value++)
-	{
-		char cardValue = CastCardValue(value);
-		Card* card = new Card(cardValue, CardSuit::TILES);
-		cardDeck.push_back(card);
+		CreateNewCard(value, CardSuit::CLOVERS);
+		CreateNewCard(value, CardSuit::HEARTS);
+		CreateNewCard(value, CardSuit::PIKES);
+		CreateNewCard(value, CardSuit::TILES);
 	}
 
 	std::random_device rd;
@@ -104,25 +84,65 @@ void GameManager::FillCardList()
 	std::shuffle(cardDeck.begin(), cardDeck.end(), g);
 }
 
+void GameManager::CreateNewCard(int value, CardSuit cardSuit)
+{
+	char cardValue = CastCardValue(value);
+	int points = 0;
+	switch (value)
+	{
+	case 3:
+		points = 10;
+		break;
+	case 11:
+		points = 2;
+		break;
+	case 12:
+		points = 3;
+		break;
+	case 13:
+		points = 4;
+		break;
+	case 14:
+		points = 11;
+		break;
+	default:
+		break;
+	}
+	Card* card = new Card(cardValue, cardSuit, value, points);
+	cardDeck.push_back(card);
+}
+
 char GameManager::CastCardValue(int value)
 {
 	char cardValue = '0';
 	switch (value)
 	{
-	case 0:
-		cardValue = 'A';
-		break;
-	case 1:
 	case 2:
+		cardValue = '2';
+		break;
 	case 3:
+		cardValue = '3';
+		break;
 	case 4:
+		cardValue = '4';
+		break;
 	case 5:
+		cardValue = '5';
+		break;
 	case 6:
+		cardValue = '6';
+		break;
 	case 7:
+		cardValue = '7';
+		break;
 	case 8:
+		cardValue = '8';
+		break;
 	case 9:
+		cardValue = '9';
+		break;
 	case 10:
-		cardValue = static_cast<char>(value);
+		cardValue = '10';
 		break;
 	case 11:
 		cardValue = 'J';
@@ -132,6 +152,9 @@ char GameManager::CastCardValue(int value)
 		break;
 	case 13:
 		cardValue = 'K';
+		break;
+	case 14:
+		cardValue = 'A';
 		break;
 	default:
 		break;
