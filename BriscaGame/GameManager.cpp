@@ -1,19 +1,38 @@
 #include "GameManager.h"
 
+#include <algorithm>
+#include <random>
+
 GameManager::GameManager()
 {
-	FillCardList();
-
+	playerUser = new Player();
+	playerAI = new Player();
+	unveiledCard = nullptr;
 }
 
 GameManager::~GameManager()
 {
+	for (const Card* card: cardDeck)
+	{
+		delete card;
+	}
 
+	cardDeck.clear();
+
+	delete playerUser;
+	delete playerAI;
+	delete unveiledCard;
 }
 
 bool GameManager::Init()
 {
-	return false;
+	FillCardList();
+	SplitCardsToPlayers();
+
+	
+	unveiledCard = TakeCardFromSet();
+
+	return true;
 }
 
 bool GameManager::PlayerSelection()
@@ -54,31 +73,34 @@ void GameManager::FillCardList()
 	{
 		char cardValue = CastCardValue(value);
 		Card* card = new Card(cardValue, CardSuit::CLOVERS);
-		cardList.insert(card);
+		cardDeck.push_back(card);
 	}
 
 	for (int value = 0; value < 13; value++)
 	{
 		char cardValue = CastCardValue(value);
 		Card* card = new Card(cardValue, CardSuit::HEARTS);
-		cardList.insert(card);
+		cardDeck.push_back(card);
 	}
 
 	for (int value = 0; value < 13; value++)
 	{
 		char cardValue = CastCardValue(value);
 		Card* card = new Card(cardValue, CardSuit::PIKES);
-		cardList.insert(card);
+		cardDeck.push_back(card);
 	}
 
 	for (int value = 0; value < 13; value++)
 	{
 		char cardValue = CastCardValue(value);
 		Card* card = new Card(cardValue, CardSuit::TILES);
-		cardList.insert(card);
+		cardDeck.push_back(card);
 	}
 
-	cardList.
+	std::random_device rd;
+	std::mt19937 g(rd());
+
+	std::shuffle(cardDeck.begin(), cardDeck.end(), g);
 }
 
 char GameManager::CastCardValue(int value)
@@ -115,4 +137,24 @@ char GameManager::CastCardValue(int value)
 	}
 
 	return cardValue;
+}
+
+void GameManager::SplitCardsToPlayers()
+{
+	playerUser->TakeCard(TakeCardFromSet());
+	playerAI->TakeCard(TakeCardFromSet());
+	playerUser->TakeCard(TakeCardFromSet());
+	playerAI->TakeCard(TakeCardFromSet());
+	playerUser->TakeCard(TakeCardFromSet());
+	playerAI->TakeCard(TakeCardFromSet());
+}
+
+Card* GameManager::TakeCardFromSet()
+{
+	if (cardDeck.empty())
+		return nullptr;
+
+	Card* card = cardDeck.back();
+	cardDeck.pop_back();
+	return card;
 }

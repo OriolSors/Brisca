@@ -1,7 +1,8 @@
 #pragma once
 
-#include <unordered_set>
+#include <deque>
 #include "Card.h"
+#include "Player.h"
 
 class GameManager 
 {
@@ -22,6 +23,13 @@ private:
 
 	void FillCardList();
 	char CastCardValue(int value);
-	std::unordered_set<Card*> cardList;
+	void SplitCardsToPlayers();
+	Card* TakeCardFromSet();
+
+	std::deque<Card*> cardDeck;
+	Card* unveiledCard;
+
+	Player* playerUser;
+	Player* playerAI;
 
 };
