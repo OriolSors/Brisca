@@ -17,13 +17,13 @@ GameManager* manager;
 int main()
 {
 	GameState gameState = GameState::GAME_INIT;
-	manager = new GameManager();
 	
 	while (gameState != GameState::EXIT)
 	{
 		switch (gameState)
 		{
 		case GameState::GAME_INIT:
+			manager = new GameManager();
 			manager->Init();
 			gameState = GameState::PLAYER_SELECTION;
 			break;
@@ -52,14 +52,14 @@ int main()
 		case GameState::GAME_FINISH:
 			if (manager->GameFinish())
 			{
-				manager->CleanUp();
 				gameState = GameState::GAME_INIT;
 			}
 			else
 			{
-				delete manager;
 				gameState = GameState::EXIT;
 			}
+
+			delete manager;
 			break;
 		default:
 			break;
