@@ -26,14 +26,18 @@ void RoundManager::ObtainPointsFromRound()
 			playerUser->SetPoints(pointsObtained);
 			manager->SetStartPlayer(playerUser->GetPlayerType());
 			Log("You win!");
-			LogSameLine("You receive: ");
-			LogSameLine((char*) pointsObtained);
+			Log("You receive: ");
+			std::string points = std::to_string(pointsObtained);
+			Log(points);
 		}
 		else
 		{
 			playerAI->SetPoints(std::abs(pointsObtained));
 			manager->SetStartPlayer(playerAI->GetPlayerType());
 			Log("You lose :(");
+			Log("Enemy receive: ");
+			std::string points = std::to_string(std::abs(pointsObtained));
+			Log(points);
 			
 		}
 	}
@@ -45,14 +49,18 @@ void RoundManager::ObtainPointsFromRound()
 			playerAI->SetPoints(pointsObtained);
 			manager->SetStartPlayer(playerAI->GetPlayerType());
 			Log("You win!");
-			LogSameLine("You receive: ");
-			LogSameLine((char*)pointsObtained);
+			Log("You receive: ");
+			std::string points = std::to_string(pointsObtained);
+			Log(points);
 		}
 		else
 		{
 			playerUser->SetPoints(std::abs(pointsObtained));
 			manager->SetStartPlayer(playerUser->GetPlayerType());
 			Log("You lose :(");
+			Log("Enemy receive: ");
+			std::string points = std::to_string(std::abs(pointsObtained));
+			Log(points);
 		}
 	}
 }

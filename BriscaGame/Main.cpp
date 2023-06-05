@@ -40,7 +40,7 @@ int main()
 			gameState = GameState::GAME_ROUND_FINISH;
 			break;
 		case GameState::GAME_ROUND_FINISH:
-			if (manager->GameRoundFinish())
+			if (!manager->GameRoundFinish())
 			{
 				gameState = GameState::GAME_FINISH;
 			}

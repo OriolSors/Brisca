@@ -1,28 +1,31 @@
 #include <iostream>
 #include "IOUser.h"
+#include <cctype>
 
 void Log(const char* message)
 {
 	std::cout << message << std::endl;
 }
 
-void LogSameLine(const char* message)
+void Log(std::string& message)
 {
 	std::cout << message << std::endl;
 }
 
 int InputNumber(int options)
 {
-	int input;
+	char input;
 	std::cin >> input;
-	while (!std::isdigit(input) || (input < 1 || input > options))
+
+	while (!(isdigit(input)) || ((input - '0') < 1 || (input - '0') > options))
 	{
 		Log("This is not an option!");
 		std::cin >> input;
 	}
-	return input;
 
+	return input - '0';  // Convert char to int before returning
 }
+
 
 bool InputBool()
 {

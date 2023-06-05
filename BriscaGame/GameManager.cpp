@@ -29,6 +29,11 @@ bool GameManager::Init()
 
 bool GameManager::PlayerSelection()
 {
+	Log("The unveiled card is:");
+	std::string message;
+	message += unveiledCard->GetValue();
+	message += unveiledCard->GetCardSuitChar();
+	Log(message);
 	playerUser->Play();
 	return true;
 }
@@ -95,13 +100,15 @@ bool GameManager::GameFinish()
 
 	if (playerUserPoints > playerAIPoints)
 	{
-		LogSameLine("You win with: ");
-		Log((char*)playerUserPoints);
+		Log("You win with: ");
+		std::string points = std::to_string(playerUserPoints);
+		Log(points);
 	}
 	else
 	{
-		LogSameLine("Enemy win with: ");
-		Log((char*)playerAIPoints);
+		Log("Enemy win with: ");
+		std::string points = std::to_string(playerAIPoints);
+		Log(points);
 	}
 
 	Log("Repeat game?");
@@ -128,7 +135,7 @@ bool GameManager::CleanUp()
 
 void GameManager::FillCardList()
 {
-	for (int value = 0; value < 13; value++)
+	for (int value = 0; value < 12; value++)
 	{
 		CreateNewCard(value, CardSuit::CLOVERS);
 		CreateNewCard(value, CardSuit::HEARTS);
@@ -148,19 +155,19 @@ void GameManager::CreateNewCard(int value, CardSuit cardSuit)
 	int points = 0;
 	switch (value)
 	{
-	case 8:
+	case 7:
 		points = 2;
 		break;
-	case 9:
+	case 8:
 		points = 3;
 		break;
-	case 10:
+	case 9:
 		points = 4;
 		break;
-	case 11:
+	case 10:
 		points = 10;
 		break;
-	case 12:
+	case 11:
 		points = 11;
 		break;
 	default:
@@ -171,19 +178,19 @@ void GameManager::CreateNewCard(int value, CardSuit cardSuit)
 	char cardSuitChar;
 	if (cardSuit == CardSuit::CLOVERS)
 	{
-		cardSuitChar = '\u2663';
+		cardSuitChar = 'T';
 	}
 	else if (cardSuit == CardSuit::HEARTS)
 	{
-		cardSuitChar = '\u2665';
+		cardSuitChar = 'C';
 	}
 	else if (cardSuit == CardSuit::PIKES)
 	{
-		cardSuitChar = '\u2660';
+		cardSuitChar = 'P';
 	}
 	else
 	{
-		cardSuitChar = '\u2666';
+		cardSuitChar = 'D';
 	}
 
 	Card* card = new Card(cardValue, cardSuit, value, points, cardSuitChar);
@@ -217,21 +224,18 @@ char GameManager::CastCardValue(int value)
 		cardValue = '9';
 		break;
 	case 7:
-		cardValue = '10';
-		break;
-	case 8:
 		cardValue = 'J';
 		break;
-	case 9:
+	case 8:
 		cardValue = 'Q';
 		break;
-	case 10:
+	case 9:
 		cardValue = 'K';
 		break;
-	case 11:
+	case 10:
 		cardValue = '3';
 		break;
-	case 12:
+	case 11:
 		cardValue = 'A';
 		break;
 	default:

@@ -3,6 +3,7 @@
 #include "GameManager.h"
 
 #include <random>
+#include <string>
 
 Player::Player(PlayerType playerType): playerType(playerType), points(0), selectedCard(nullptr)
 {
@@ -27,12 +28,7 @@ void Player::Play()
 		for (auto card : cardHand)
 		{
 			count++;
-			char message[5];
-			message[0] = (char)(count);
-			message[1] = ')';
-			message[2] = ' ';
-			message[3] = card->GetValue();
-			message[4] = card->GetCardSuitChar();
+			std::string message = std::to_string(count) + ')' + ' ' + card->GetValue() + card->GetCardSuitChar();
 			Log(message);
 		}
 		int option = InputNumber(count);
@@ -40,10 +36,10 @@ void Player::Play()
 		cardHand.erase(cardHand.begin() + option - 1);
 
 		Log("You selected:");
-		char selection[2];
-		selection[0] = selectedCard->GetValue();
-		selection[1] = selectedCard->GetCardSuitChar();
-		Log(selection);
+		std::string message;
+		message += selectedCard->GetValue();
+		message += selectedCard->GetCardSuitChar();
+		Log(message);
 	}
 	else
 	{
@@ -56,10 +52,10 @@ void Player::Play()
 		cardHand.erase(cardHand.begin() + option);
 
 		Log("Enemy selected:");
-		char selection[2];
-		selection[0] = selectedCard->GetValue();
-		selection[1] = selectedCard->GetCardSuitChar();
-		Log(selection);
+		std::string message;
+		message += selectedCard->GetValue();
+		message += selectedCard->GetCardSuitChar();
+		Log(message);
 	}
 	
 }
