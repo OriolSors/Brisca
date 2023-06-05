@@ -18,89 +18,98 @@ void RoundManager::ObtainPointsFromRound()
 	Player* playerUser = manager->GetPlayerUser();
 	Player* playerAI = manager->GetPlayerAI();
 
+	int pointsToSum = playerUser->GetSelectedCard()->GetPoints() + playerAI->GetSelectedCard()->GetPoints();
+
 	if (manager->GetStartPlayer() == playerUser->GetPlayerType())
 	{
-		int pointsObtained = ObtainPointsFromCards(playerUser->GetSelectedCard(), playerAI->GetSelectedCard());
-		if (pointsObtained > 0)
+		bool isFirstCardWinning = IsFirstCardWinning(playerUser->GetSelectedCard(), playerAI->GetSelectedCard());
+		if (isFirstCardWinning)
 		{
-			playerUser->SetPoints(pointsObtained);
+			playerUser->SetPoints(pointsToSum);
 			manager->SetStartPlayer(playerUser->GetPlayerType());
 			Log("You win!");
 			Log("You receive: ");
-			std::string points = std::to_string(pointsObtained);
+			std::string points = std::to_string(pointsToSum);
 			Log(points);
 		}
 		else
 		{
-			playerAI->SetPoints(std::abs(pointsObtained));
+			playerAI->SetPoints(pointsToSum);
 			manager->SetStartPlayer(playerAI->GetPlayerType());
 			Log("You lose :(");
 			Log("Enemy receive: ");
-			std::string points = std::to_string(std::abs(pointsObtained));
+			std::string points = std::to_string(pointsToSum);
 			Log(points);
 			
 		}
 	}
 	else
 	{
-		int pointsObtained = ObtainPointsFromCards(playerAI->GetSelectedCard(), playerUser->GetSelectedCard());
-		if (pointsObtained > 0)
+		bool isFirstCardWinning = IsFirstCardWinning(playerAI->GetSelectedCard(), playerUser->GetSelectedCard());
+		if (isFirstCardWinning > 0)
 		{
-			playerAI->SetPoints(pointsObtained);
+			playerAI->SetPoints(pointsToSum);
 			manager->SetStartPlayer(playerAI->GetPlayerType());
-			Log("You win!");
-			Log("You receive: ");
-			std::string points = std::to_string(pointsObtained);
+			Log("You lose :(");
+			Log("Enemy receive: ");
+			std::string points = std::to_string(pointsToSum);
 			Log(points);
 		}
 		else
 		{
-			playerUser->SetPoints(std::abs(pointsObtained));
+			playerUser->SetPoints(pointsToSum);
 			manager->SetStartPlayer(playerUser->GetPlayerType());
-			Log("You lose :(");
-			Log("Enemy receive: ");
-			std::string points = std::to_string(std::abs(pointsObtained));
+			Log("You win!");
+			Log("You receive: ");
+			std::string points = std::to_string(pointsToSum);
 			Log(points);
 		}
 	}
 }
 
-int RoundManager::ObtainPointsFromCards(Card* firstCard, Card* secondCard)
+bool RoundManager::IsFirstCardWinning(Card* firstCard, Card* secondCard)
 {
 	bool isFirstCardMainSuit = firstCard->GetCardSuit() == manager->GetUnveiledCard()->GetCardSuit();
 	bool isSecondCardMainSuit = secondCard->GetCardSuit() == manager->GetUnveiledCard()->GetCardSuit();
 	int firstCardValue = firstCard->GetValueInt();
 	int secondCardValue = secondCard->GetValueInt();
-	int roundPoints = firstCard->GetPoints() + secondCard->GetPoints();
 
 	if (isFirstCardMainSuit && isSecondCardMainSuit)
 	{
 		if (firstCardValue > secondCardValue)
 		{
-			return roundPoints;
+			return true;
 		}
 		else
 		{
-			return -roundPoints;
+			return false;
 		}
 	}
 	else if (isFirstCardMainSuit)
 	{
-		return roundPoints;
+		return true;
 	}
 	else if (isSecondCardMainSuit)
 	{
-		return -roundPoints;
+		return false;
 	}
 	else
 	{
-		if (firstCardValue > secondCardValue)
+		if (firstCard->GetCardSuit() == secondCard->GetCardSuit())
 		{
-			return roundPoints;
+			if (firstCardValue > secondCardValue)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		else
 		{
-			return -roundPoints;
+			return true;
 		}
+		
 	}
 }

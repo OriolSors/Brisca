@@ -24,16 +24,27 @@ bool GameManager::Init()
 
 	unveiledCard = TakeCardFromSet();
 
-	return true;
-}
-
-bool GameManager::PlayerSelection()
-{
 	Log("The unveiled card is:");
 	std::string message;
 	message += unveiledCard->GetValue();
 	message += unveiledCard->GetCardSuitChar();
 	Log(message);
+
+	return true;
+}
+
+bool GameManager::PlayerSelection()
+{
+
+	if (startPlayer == PlayerType::USER)
+	{
+		Log("YOU go first!!");
+	}
+	else
+	{
+		Log("ENEMY go first!!");
+	}
+
 	playerUser->Play();
 	return true;
 }
@@ -88,8 +99,16 @@ bool GameManager::GameRoundFinish()
 		}
 
 		playerUser->ChangeUnveiledCard();
+
+		Log("The unveiled card is:");
+		std::string message;
+		message += unveiledCard->GetValue();
+		message += unveiledCard->GetCardSuitChar();
+		Log(message);
+
 		return true;
 	}
+	
 	
 }
 

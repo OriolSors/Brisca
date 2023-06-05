@@ -64,38 +64,43 @@ void Player::ChangeUnveiledCard()
 {
 	Card* unveiledCard = manager->GetUnveiledCard();
 	bool changeUnveiled = false;
-	for (auto card : cardHand)
+	for (auto it = cardHand.begin(); it != cardHand.end(); ++it)
 	{
-		
+		Card* card = *it;
 		if (card->GetCardSuit() == unveiledCard->GetCardSuit())
 		{
-			if (card->GetValueInt() == 7 && unveiledCard->GetValueInt() > 7)
+			if (card->GetValueInt() == 4 && unveiledCard->GetValueInt() > 4)
 			{
+				Log("You got the 7!");
 				Log("Change unveiled card?");
 				changeUnveiled = InputBool();
 				if (changeUnveiled)
 				{
 					Card* temp = card;
-					card = unveiledCard;
-					unveiledCard = card;
+					*it = unveiledCard;
+					unveiledCard = temp;
+					manager->SetUnveiledCard(unveiledCard);
 				}
-				
+				break;
 			}
-			else if (card->GetValueInt() == 2 && (unveiledCard->GetValueInt() <= 7 && unveiledCard->GetValueInt() > 2))
+			else if (card->GetValueInt() == 0 && (unveiledCard->GetValueInt() <= 4 && unveiledCard->GetValueInt() > 0))
 			{
+				Log("You got the 2!");
 				Log("Change unveiled card?");
 				changeUnveiled = InputBool();
 				if (changeUnveiled)
 				{
 					Card* temp = card;
-					card = unveiledCard;
-					unveiledCard = card;
+					*it = unveiledCard;
+					unveiledCard = temp;
+					manager->SetUnveiledCard(unveiledCard);
 				}
+				break;
 			}
 		}
-		
 	}
 }
+
 
 void Player::TakeCard(Card* card)
 {

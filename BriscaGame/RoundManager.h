@@ -12,7 +12,7 @@ public:
 
 private:
 
-	int ObtainPointsFromCards(Card* firstCard, Card* secondCard);
+	bool IsFirstCardWinning(Card* firstCard, Card* secondCard);
 };
 
 
